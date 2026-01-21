@@ -94,7 +94,7 @@ export default function Home() {
                 }}
               />
               {selectedDate && (
-                <div className="text-center mt-6 space-y-3">
+                <div className="text-center mt-6 space-y-4">
                   <p className="text-lg font-medium text-indigo-900">
                     {selectedDate.toLocaleDateString("en-US", {
                       weekday: "long",
@@ -109,6 +109,10 @@ export default function Home() {
                       (d) => d.toDateString() === selectedDate.toDateString(),
                     );
 
+                    const isWeekend =
+                      selectedDate.getDay() === 0 ||
+                      selectedDate.getDay() === 6;
+
                     if (isBooked) {
                       return (
                         <p className="text-base font-semibold text-red-600">
@@ -117,31 +121,44 @@ export default function Home() {
                       );
                     }
 
-                    // Fake limited on weekends for realism
-                    const isWeekend =
-                      selectedDate.getDay() === 0 ||
-                      selectedDate.getDay() === 6;
                     if (isWeekend) {
                       return (
-                        <div className="space-y-1">
+                        <div className="space-y-2">
                           <p className="text-base font-semibold text-yellow-600">
                             Limited Availability – Weekend premium
                           </p>
                           <p className="text-sm text-gray-600">
                             Starting from $1,800 (full day)
                           </p>
+                          <Button
+                            variant="outline"
+                            className="mt-4 border-yellow-600 text-yellow-700 hover:bg-yellow-50"
+                          >
+                            Contact Us for Waitlist
+                          </Button>
                         </div>
                       );
                     }
 
+                    // Available case
                     return (
-                      <div className="space-y-1">
+                      <div className="space-y-4">
                         <p className="text-base font-semibold text-green-600">
                           Available – Ready to book
                         </p>
                         <p className="text-sm text-gray-600">
                           From $1,200 (full day) or $150/hour
                         </p>
+                        <Button
+                          className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg font-semibold shadow-md"
+                          onClick={() =>
+                            alert(
+                              `Booking inquiry for ${selectedDate.toLocaleDateString()}`,
+                            )
+                          }
+                        >
+                          Book Now
+                        </Button>
                       </div>
                     );
                   })()}
