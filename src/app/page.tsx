@@ -86,10 +86,38 @@ export default function Home() {
                 }}
               />
               {selectedDate && (
-                <p className="text-center text-sm mt-6 text-gray-700 font-medium">
-                  {selectedDate.toDateString()} is{" "}
-                  {selectedDate.getDate() % 2 === 0 ? "available" : "booked"}.
-                </p>
+                <div className="text-center mt-6 space-y-2">
+                  <p className="text-lg font-medium text-indigo-800">
+                    {selectedDate.toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+
+                  <p
+                    className={`text-base font-semibold ${
+                      selectedDate.getDate() % 3 === 0
+                        ? "text-red-600"
+                        : selectedDate.getDate() % 5 === 0
+                          ? "text-yellow-600"
+                          : "text-green-600"
+                    }`}
+                  >
+                    {selectedDate.getDate() % 3 === 0
+                      ? "Fully Booked – No slots available"
+                      : selectedDate.getDate() % 5 === 0
+                        ? "Limited Availability – Contact us"
+                        : "Available – Can book now"}
+                  </p>
+
+                  {selectedDate.getDate() % 3 !== 0 && (
+                    <p className="text-sm text-gray-600">
+                      Starting from $1,200 (full day) or $150/hour
+                    </p>
+                  )}
+                </div>
               )}
             </CardContent>
           </Card>
