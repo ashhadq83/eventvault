@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
@@ -9,6 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
@@ -22,6 +34,7 @@ export default function Home() {
     new Date(2026, 1, 14),
     new Date(2026, 1, 22),
   ];
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-blue-50 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-5xl w-full text-center">
@@ -151,11 +164,7 @@ export default function Home() {
                         </p>
                         <Button
                           className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg font-semibold shadow-md"
-                          onClick={() =>
-                            alert(
-                              `Booking inquiry for ${selectedDate.toLocaleDateString()}`,
-                            )
-                          }
+                          onClick={() => setIsBookingOpen(true)}
                         >
                           Book Now
                         </Button>
@@ -191,6 +200,81 @@ export default function Home() {
           Built by Ashhad • Calgary, Alberta • 2026
         </p>
       </div>
+      <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+        <DialogContent className="sm:max-w-106.25 w-full">
+          <DialogHeader>
+            <DialogTitle>
+              Book{" "}
+              {selectedDate?.toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              }) || "a date"}
+            </DialogTitle>
+            <DialogDescription>
+              Tell us about your event – we&apos;ll get back to you soon.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input id="name" placeholder="Your name" className="col-span-3" />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your@email.com"
+                className="col-span-3"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="guests" className="text-right">
+                Guests
+              </Label>
+              <Input
+                id="guests"
+                type="number"
+                placeholder="100"
+                className="col-span-3"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="type" className="text-right">
+                Event Type
+              </Label>
+              <Textarea
+                id="type"
+                placeholder="Wedding, corporate, birthday..."
+                className="col-span-3"
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsBookingOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                alert("Inquiry sent! (demo)");
+                setIsBookingOpen(false);
+              }}
+            >
+              Submit Inquiry
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
