@@ -1,5 +1,7 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +11,9 @@ import {
 } from "@/components/ui/card";
 
 export default function Home() {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date(),
+  );
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-blue-50 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-5xl w-full text-center">
@@ -70,7 +75,8 @@ export default function Home() {
             <CardContent className="p-6 md:p-8">
               <Calendar
                 mode="single"
-                selected={new Date()}
+                selected={selectedDate}
+                onSelect={setSelectedDate}
                 className="rounded-md border mx-auto w-full max-w-87.5 md:max-w-105"
                 classNames={{
                   day_selected: "bg-indigo-600 text-white hover:bg-indigo-600",
@@ -79,6 +85,12 @@ export default function Home() {
                   caption_label: "text-indigo-900 font-semibold",
                 }}
               />
+              {selectedDate && (
+                <p className="text-center text-sm mt-6 text-gray-700 font-medium">
+                  {selectedDate.toDateString()} is{" "}
+                  {selectedDate.getDate() % 2 === 0 ? "available" : "booked"}.
+                </p>
+              )}
             </CardContent>
           </Card>
 
