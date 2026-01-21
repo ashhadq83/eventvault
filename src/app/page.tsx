@@ -39,6 +39,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [guests, setGuests] = useState("");
   const [eventType, setEventType] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-blue-50 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-5xl w-full text-center">
@@ -113,7 +114,7 @@ export default function Home() {
               {selectedDate && (
                 <div className="text-center mt-6 space-y-4">
                   <p className="text-lg font-medium text-indigo-900">
-                    {selectedDate.toLocaleDateString("en-US", {
+                    {selectedDate.toLocaleDateString("en-CA", {
                       weekday: "long",
                       month: "long",
                       day: "numeric",
@@ -157,7 +158,7 @@ export default function Home() {
                       );
                     }
 
-                    // Available case
+                    // Available case – Book Now button
                     return (
                       <div className="space-y-4">
                         <p className="text-base font-semibold text-green-600">
@@ -205,11 +206,11 @@ export default function Home() {
         </p>
       </div>
       <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
-        <DialogContent className="sm:max-w-106.25 w-full">
+        <DialogContent className="sm:max-w-106.25">
           <DialogHeader>
             <DialogTitle>
               Book{" "}
-              {selectedDate?.toLocaleDateString("en-US", {
+              {selectedDate?.toLocaleDateString("en-CA", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
@@ -220,86 +221,98 @@ export default function Home() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              placeholder="Your name"
-              className="col-span-3"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+          {submitSuccess ? (
+            <div className="py-8 text-center space-y-4">
+              <p className="text-2xl font-bold text-green-600">Inquiry Sent!</p>
+              <p className="text-gray-600">
+                Thank you! We&apos;ll contact you soon about{" "}
+                {selectedDate?.toLocaleDateString("en-CA")}.
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setIsBookingOpen(false);
+                  setSubmitSuccess(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="Your name"
+                    className="col-span-3"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
-              Email
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="your@email.com"
-              className="col-span-3"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    className="col-span-3"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="guests" className="text-right">
-              Guests
-            </Label>
-            <Input
-              id="guests"
-              type="number"
-              placeholder="100"
-              className="col-span-3"
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-            />
-          </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="guests" className="text-right">
+                    Guests
+                  </Label>
+                  <Input
+                    id="guests"
+                    type="number"
+                    placeholder="100"
+                    className="col-span-3"
+                    value={guests}
+                    onChange={(e) => setGuests(e.target.value)}
+                  />
+                </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="type" className="text-right">
-              Event Type
-            </Label>
-            <Textarea
-              id="type"
-              placeholder="Wedding, corporate, birthday..."
-              className="col-span-3"
-              value={eventType}
-              onChange={(e) => setEventType(e.target.value)}
-            />
-          </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="type" className="text-right">
+                    Event Type
+                  </Label>
+                  <Textarea
+                    id="type"
+                    placeholder="Wedding, corporate, birthday..."
+                    className="col-span-3"
+                    value={eventType}
+                    onChange={(e) => setEventType(e.target.value)}
+                  />
+                </div>
+              </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsBookingOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                alert(
-                  `Inquiry sent!\n\n` +
-                    `Date: ${selectedDate?.toLocaleDateString()}\n` +
-                    `Name: ${name}\n` +
-                    `Email: ${email}\n` +
-                    `Guests: ${guests}\n` +
-                    `Event type: ${eventType}`,
-                );
-                setIsBookingOpen(false);
-
-                // Optional: clear form after submit
-                setName("");
-                setEmail("");
-                setGuests("");
-                setEventType("");
-              }}
-            >
-              Submit Inquiry
-            </Button>
-          </DialogFooter>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsBookingOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    setSubmitSuccess(true);
+                  }}
+                >
+                  Submit Inquiry
+                </Button>
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
