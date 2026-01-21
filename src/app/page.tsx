@@ -35,6 +35,10 @@ export default function Home() {
     new Date(2026, 1, 22),
   ];
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [guests, setGuests] = useState("");
+  const [eventType, setEventType] = useState("");
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-blue-50 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-5xl w-full text-center">
@@ -216,48 +220,58 @@ export default function Home() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input id="name" placeholder="Your name" className="col-span-3" />
-            </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="Your name"
+              className="col-span-3"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                className="col-span-3"
-              />
-            </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="email" className="text-right">
+              Email
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="your@email.com"
+              className="col-span-3"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="guests" className="text-right">
-                Guests
-              </Label>
-              <Input
-                id="guests"
-                type="number"
-                placeholder="100"
-                className="col-span-3"
-              />
-            </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="guests" className="text-right">
+              Guests
+            </Label>
+            <Input
+              id="guests"
+              type="number"
+              placeholder="100"
+              className="col-span-3"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+            />
+          </div>
 
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="type" className="text-right">
-                Event Type
-              </Label>
-              <Textarea
-                id="type"
-                placeholder="Wedding, corporate, birthday..."
-                className="col-span-3"
-              />
-            </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="type" className="text-right">
+              Event Type
+            </Label>
+            <Textarea
+              id="type"
+              placeholder="Wedding, corporate, birthday..."
+              className="col-span-3"
+              value={eventType}
+              onChange={(e) => setEventType(e.target.value)}
+            />
           </div>
 
           <DialogFooter>
@@ -266,8 +280,21 @@ export default function Home() {
             </Button>
             <Button
               onClick={() => {
-                alert("Inquiry sent! (demo)");
+                alert(
+                  `Inquiry sent!\n\n` +
+                    `Date: ${selectedDate?.toLocaleDateString()}\n` +
+                    `Name: ${name}\n` +
+                    `Email: ${email}\n` +
+                    `Guests: ${guests}\n` +
+                    `Event type: ${eventType}`,
+                );
                 setIsBookingOpen(false);
+
+                // Optional: clear form after submit
+                setName("");
+                setEmail("");
+                setGuests("");
+                setEventType("");
               }}
             >
               Submit Inquiry
