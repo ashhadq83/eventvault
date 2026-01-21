@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Home() {
   return (
@@ -8,7 +15,7 @@ export default function Home() {
         <h1 className="text-6xl md:text-7xl font-extrabold text-indigo-950 mb-6 tracking-tight">
           EventVault
         </h1>
-        
+
         <p className="text-2xl md:text-3xl text-gray-700 mb-10">
           The Smart Way to Book Banquet Halls & Events
         </p>
@@ -16,8 +23,12 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <Card className="border-indigo-200 shadow-lg hover:shadow-xl transition-shadow">
             <CardHeader>
-              <CardTitle className="text-indigo-800">Fast Availability</CardTitle>
-              <CardDescription>Real-time calendar, no conflicts</CardDescription>
+              <CardTitle className="text-indigo-800">
+                Fast Availability
+              </CardTitle>
+              <CardDescription>
+                Real-time calendar, no conflicts
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600">Check rooms instantly</p>
@@ -44,12 +55,49 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
+        <div className="mt-20 w-full max-w-3xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold text-indigo-900 mb-3">
+              Check Venue Availability
+            </h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              See real-time hall bookings and open dates. Full calendar &
+              conflict detection coming soon.
+            </p>
+          </div>
 
+          <Card className="border-indigo-200 shadow-xl overflow-hidden">
+            <CardContent className="p-6 md:p-8">
+              <Calendar
+                mode="single"
+                selected={new Date()}
+                className="rounded-md border mx-auto w-full max-w-87.5 md:max-w-105"
+                classNames={{
+                  day_selected: "bg-indigo-600 text-white hover:bg-indigo-600",
+                  day_today: "bg-indigo-100 text-indigo-900 font-bold",
+                  head_cell: "text-gray-500 font-medium",
+                  caption_label: "text-indigo-900 font-semibold",
+                }}
+              />
+            </CardContent>
+          </Card>
+
+          <p className="text-center text-sm text-gray-500 mt-6">
+            Click any date to see availability details (demo mode)
+          </p>
+        </div>
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
-          <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-6 text-lg">
+          <Button
+            size="lg"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-6 text-lg"
+          >
             Explore Venues
           </Button>
-          <Button size="lg" variant="outline" className="border-indigo-600 text-indigo-700 px-10 py-6 text-lg">
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-indigo-600 text-indigo-700 px-10 py-6 text-lg"
+          >
             Admin Dashboard
           </Button>
         </div>

@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EventVault – Banquet Hall & Event Booking Platform
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.4-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-000000?style=for-the-badge&logo=shadcn&logoColor=white)](https://ui.shadcn.com/)
 
-First, run the development server:
+Modern, affordable SaaS for banquet halls, event centers and multi-space venues.  
+Built for Calgary, Okotoks, and Canada-wide venues — faster bookings, no conflicts, clean UX.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![EventVault Landing Page](https://via.placeholder.com/1200x600/6366f1/ffffff?text=EventVault+Screenshot)  
+_(Replace this with a real screenshot later – see below)_
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features (Current MVP)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Beautiful landing page with venue highlights
+- Real-time availability preview calendar (shadcn Calendar)
+- Feature cards showcasing core benefits
+- Responsive design (mobile + desktop)
+- shadcn/ui components (Buttons, Cards, Calendar)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Coming soon:**
 
-## Learn More
+- User roles (Staff, Admin, Super Admin)
+- Full booking workflow (inquiry → contract → deposit)
+- Conflict detection & room management
+- CRM & client database
+- Stripe payments & invoicing
+- React Native mobile app
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Icons**: lucide-react
+- **Package Manager**: pnpm (faster installs)
+- **Future**: Prisma + PostgreSQL (Neon), Clerk/NextAuth auth, Stripe
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Setup & Run Locally
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repo
+   ```bash
+   git clone https://github.com/ashhadq83/eventvault.git
+   cd eventvault
+   ```
