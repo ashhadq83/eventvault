@@ -14,6 +14,14 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     new Date(),
   );
+  const bookedDates = [
+    new Date(2026, 0, 15), // Jan 15, 2026 (January is month 0 in JS)
+    new Date(2026, 0, 21),
+    new Date(2026, 0, 28),
+    new Date(2026, 1, 5), // Feb 5
+    new Date(2026, 1, 14),
+    new Date(2026, 1, 22),
+  ];
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-50 via-white to-blue-50 flex flex-col items-center justify-center px-6 py-12">
       <div className="max-w-5xl w-full text-center">
@@ -86,8 +94,8 @@ export default function Home() {
                 }}
               />
               {selectedDate && (
-                <div className="text-center mt-6 space-y-2">
-                  <p className="text-lg font-medium text-indigo-800">
+                <div className="text-center mt-6 space-y-3">
+                  <p className="text-lg font-medium text-indigo-900">
                     {selectedDate.toLocaleDateString("en-US", {
                       weekday: "long",
                       month: "long",
@@ -96,27 +104,47 @@ export default function Home() {
                     })}
                   </p>
 
-                  <p
-                    className={`text-base font-semibold ${
-                      selectedDate.getDate() % 3 === 0
-                        ? "text-red-600"
-                        : selectedDate.getDate() % 5 === 0
-                          ? "text-yellow-600"
-                          : "text-green-600"
-                    }`}
-                  >
-                    {selectedDate.getDate() % 3 === 0
-                      ? "Fully Booked – No slots available"
-                      : selectedDate.getDate() % 5 === 0
-                        ? "Limited Availability – Contact us"
-                        : "Available – Can book now"}
-                  </p>
+                  {(() => {
+                    const isBooked = bookedDates.some(
+                      (d) => d.toDateString() === selectedDate.toDateString(),
+                    );
 
-                  {selectedDate.getDate() % 3 !== 0 && (
-                    <p className="text-sm text-gray-600">
-                      Starting from $1,200 (full day) or $150/hour
-                    </p>
-                  )}
+                    if (isBooked) {
+                      return (
+                        <p className="text-base font-semibold text-red-600">
+                          Fully Booked – No slots available this day
+                        </p>
+                      );
+                    }
+
+                    // Fake limited on weekends for realism
+                    const isWeekend =
+                      selectedDate.getDay() === 0 ||
+                      selectedDate.getDay() === 6;
+                    if (isWeekend) {
+                      return (
+                        <div className="space-y-1">
+                          <p className="text-base font-semibold text-yellow-600">
+                            Limited Availability – Weekend premium
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Starting from $1,800 (full day)
+                          </p>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div className="space-y-1">
+                        <p className="text-base font-semibold text-green-600">
+                          Available – Ready to book
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          From $1,200 (full day) or $150/hour
+                        </p>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </CardContent>
